@@ -23,3 +23,6 @@ Console.WriteLine($" [x] Sent {message}");
 Console.WriteLine(" Press [enter] to exit.");
 Console.ReadLine();
 Console.WriteLine("Hallo");
+Console.WriteLine("Hallo");
+
+
