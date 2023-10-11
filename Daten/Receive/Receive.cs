@@ -6,7 +6,7 @@ using RabbitMQ.Client.Events;
 namespace AVG_MESSAGEBROKER.Receive{
     class Receive{
         private readonly Model channel;
-        public Channel {
+        public Model Channel {
             get { return channel;}
         }
 

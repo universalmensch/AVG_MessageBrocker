@@ -1,9 +1,11 @@
-﻿using System.Text;
+﻿using System;
+using System.Text;
 using RabbitMQ.Client;
+
 namespace AVG_MESSAGEBROKER.Send{
     class Send{
         private readonly Model channel;
-        public Channel {
+        public Model Channel {
             get { return channel;}
         }
 
