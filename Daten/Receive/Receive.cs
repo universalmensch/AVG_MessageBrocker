@@ -2,15 +2,13 @@
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 
-var factory = new ConnectionFactory { HostName = "localhost" };
-using var connection = factory.CreateConnection();
-using var channel = connection.CreateModel();
+namespace AVG_MESSAGEBROKER.Receive
 
-channel.QueueDeclare(queue: "hello",
-                     durable: false,
-                     exclusive: false,
-                     autoDelete: false,
-                     arguments: null);
+class Receive{
+
+}
+/*
+
 
 Console.WriteLine(" [*] Waiting for messages.");
 
