@@ -2,14 +2,18 @@ using System.Text;
 using RabbitMQ.Client;
 using System.Net.Http;
 using System.Threading.Tasks;
-using AVG_MESSAGEBROKER.Receive;
-using AVG_MESSAGEBROKER.Send;
+using Receiver;
+using Sender;
 
-namespace AVG_MESSAGEBROKER.Ablauf{
+namespace Ablauf{
     class Programm{
         static void Main(){
-            sender = new Send();
-            receiver = new Receive();
+            sender = new Sender();
+            receiver = new Receiver();
+
+            receiver.sendanfrage("Deutschland", "Karlsruhe", "Lindenplatz", "10");
+
+            Console.ReadLine();  
         }
 
         public static Model getConnectionFactory(){
@@ -34,7 +38,7 @@ namespace AVG_MESSAGEBROKER.Ablauf{
                             arguments: null);
         }
 
-        public static async HttpResponseMessage googleApiAufrufen(){
+        /*public static async void HttpResponseMessage googleApiAufrufen(){
             string apiUrl = "https://solar.googleapis.com/v1/dataLayers:get";
 
             double latitude = 37.7749; // Beispiel-Latitudenwert
@@ -66,22 +70,7 @@ namespace AVG_MESSAGEBROKER.Ablauf{
                         {
                             Console.WriteLine($"Fehler: {response.StatusCode} - {response.ReasonPhrase}");
                         }
-        }}
-
-        //const  message = response;
-        Console.WriteLine(response);
-        var body = Encoding.UTF8.GetBytes("a");
-
-        channel.BasicPublish(exchange: string.Empty,
-                            routingKey: "hello",
-                            basicProperties: null,
-                            body: body);
-        Console.WriteLine($" [x] Sent {response}");
-
-        Console.WriteLine(" Press [enter] to exit.");
-        Console.ReadLine();   
-        catch (Exception ex){
-            Console.WriteLine($"Fehler: {ex.Message}");
-        }
+                    }
+         }*/
     }
 }

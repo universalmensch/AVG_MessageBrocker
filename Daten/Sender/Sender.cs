@@ -2,7 +2,7 @@
 using System.Text;
 using RabbitMQ.Client;
 
-namespace AVG_MESSAGEBROKER.Sender{
+namespace Sender{
     class Sender{
         private readonly Model channel;
         public Model Channel {
@@ -25,6 +25,8 @@ namespace AVG_MESSAGEBROKER.Sender{
                 var anfrage = Encoding.UTF8.GetString(body);
                 
                 Console.WriteLine($" [x] Received {anfrage}");
+              
+                anfrageBearbeiten(anfrage);
             };
 
             channel.BasicConsume(queue: "anfrage",
@@ -41,6 +43,10 @@ namespace AVG_MESSAGEBROKER.Sender{
                      routingKey: "ergebnis",
                      basicProperties: null,
                      body: body);
+        }
+
+        public void anfrageBearbeiten(string anfrage){
+            sendmessage("300");
         }
     }
 }
