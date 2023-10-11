@@ -3,16 +3,20 @@ using System.Text;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 
-namespace AVG_MESSAGEBROKER.Receive{
-    class Receive{
+namespace AVG_MESSAGEBROKER.Receiver{
+    class Receiver{
         private readonly Model channel;
         public Model Channel {
             get { return channel;}
         }
 
-        public Receive(){
+        public Receiver(){
             channel = getConnectionFactory();
             declareQueue(chanal);
+        }
+
+        public void sendanfrage(){
+            
         }
 
         public void receivemessage(){
