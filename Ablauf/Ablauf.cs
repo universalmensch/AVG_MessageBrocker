@@ -18,8 +18,16 @@ namespace AVG_MESSAGEBROKER.Ablauf{
             return connection.CreateModel();
         }
 
-        public static void declareQueue(Model channel){
-            channel.QueueDeclare(queue: "hello",
+        public static void declareErgebnisQueue(Model channel){
+            channel.QueueDeclare(queue: "ergebnis",
+                            durable: false,
+                            exclusive: false,
+                            autoDelete: false,
+                            arguments: null);
+        }
+
+        public static void declareAnfrageQueue(Model channel){
+            channel.QueueDeclare(queue: "anfrage",
                             durable: false,
                             exclusive: false,
                             autoDelete: false,
