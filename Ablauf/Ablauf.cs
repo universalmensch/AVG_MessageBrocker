@@ -2,20 +2,16 @@ using System.Text;
 using RabbitMQ.Client;
 using System.Net.Http;
 using System.Threading.Tasks;
-using AVG_MESSAGEBROKER.Receive;
-using AVG_MESSAGEBROKER.Send;
+using Receiver;
+using Sender;
 
-namespace AVG_MESSAGEBROKER.Ablauf{
+namespace Ablauf{
     class Programm{
         static void Main(){
             sender = new Sender();
             receiver = new Receiver();
 
             receiver.sendanfrage("Deutschland", "Karlsruhe", "Lindenplatz", "10");
-
-            catch (Exception ex){
-            Console.WriteLine($"Fehler: {ex.Message}");
-            }
 
             Console.ReadLine();  
         }
@@ -42,7 +38,7 @@ namespace AVG_MESSAGEBROKER.Ablauf{
                             arguments: null);
         }
 
-        public static async HttpResponseMessage googleApiAufrufen(){
+        /*public static async void HttpResponseMessage googleApiAufrufen(){
             string apiUrl = "https://solar.googleapis.com/v1/dataLayers:get";
 
             double latitude = 37.7749; // Beispiel-Latitudenwert
@@ -74,6 +70,7 @@ namespace AVG_MESSAGEBROKER.Ablauf{
                         {
                             Console.WriteLine($"Fehler: {response.StatusCode} - {response.ReasonPhrase}");
                         }
-        }}
+                    }
+         }*/
     }
 }
