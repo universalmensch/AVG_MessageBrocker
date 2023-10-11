@@ -11,8 +11,8 @@ namespace AVG_MESSAGEBROKER.Sender{
 
         public Sender(){
             channel = getConnectionFactory();
-            declareAnfrageQueue(chanal);
-            declareErgebnisQueue(chanal);
+            declareAnfrageQueue(channel);
+            declareErgebnisQueue(channel);
             receiveAnfrage();
         }
 

@@ -12,7 +12,13 @@ namespace AVG_MESSAGEBROKER.Receiver{
 
         public Receiver(){
             channel = getConnectionFactory();
+<<<<<<< Updated upstream
             declareQueue(chanal);
+=======
+            declareAnfrageQueue(channel);
+            declareErgebnisQueue(channel);
+            receiveErgebnis();
+>>>>>>> Stashed changes
         }
 
         public void sendanfrage(){
