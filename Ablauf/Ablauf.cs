@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using AVG_MESSAGEBROKER.Receive;
 using AVG_MESSAGEBROKER.Send;
 
-namespace AVG_MESSAGEBROKER.Anlauf{
+namespace AVG_MESSAGEBROKER.Ablauf{
     class Programm{
         static void Main(){
             sender = new Send();
@@ -58,7 +58,7 @@ namespace AVG_MESSAGEBROKER.Anlauf{
                         {
                             Console.WriteLine($"Fehler: {response.StatusCode} - {response.ReasonPhrase}");
                         }
-        }
+        }}
 
         //const  message = response;
         Console.WriteLine(response);
@@ -71,14 +71,9 @@ namespace AVG_MESSAGEBROKER.Anlauf{
         Console.WriteLine($" [x] Sent {response}");
 
         Console.WriteLine(" Press [enter] to exit.");
-        Console.ReadLine();
-
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine($"Fehler: {ex.Message}");
-                }
-            }
+        Console.ReadLine();   
+        catch (Exception ex){
+            Console.WriteLine($"Fehler: {ex.Message}");
+        }
     }
 }
