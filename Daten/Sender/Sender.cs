@@ -2,7 +2,7 @@
 using System.Text;
 using RabbitMQ.Client;
 
-namespace AVG_MESSAGEBROKER.Sender{
+namespace Sender{
     class Sender{
         private readonly Model channel;
         public Model Channel {
