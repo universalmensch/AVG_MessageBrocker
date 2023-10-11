@@ -8,8 +8,16 @@ using AVG_MESSAGEBROKER.Send;
 namespace AVG_MESSAGEBROKER.Ablauf{
     class Programm{
         static void Main(){
-            sender = new Send();
-            receiver = new Receive();
+            sender = new Sender();
+            receiver = new Receiver();
+
+            receiver.sendanfrage("Deutschland", "Karlsruhe", "Lindenplatz", "10");
+
+            catch (Exception ex){
+            Console.WriteLine($"Fehler: {ex.Message}");
+            }
+
+            Console.ReadLine();  
         }
 
         public static Model getConnectionFactory(){
@@ -67,21 +75,5 @@ namespace AVG_MESSAGEBROKER.Ablauf{
                             Console.WriteLine($"Fehler: {response.StatusCode} - {response.ReasonPhrase}");
                         }
         }}
-
-        //const  message = response;
-        Console.WriteLine(response);
-        var body = Encoding.UTF8.GetBytes("a");
-
-        channel.BasicPublish(exchange: string.Empty,
-                            routingKey: "hello",
-                            basicProperties: null,
-                            body: body);
-        Console.WriteLine($" [x] Sent {response}");
-
-        Console.WriteLine(" Press [enter] to exit.");
-        Console.ReadLine();   
-        catch (Exception ex){
-            Console.WriteLine($"Fehler: {ex.Message}");
-        }
     }
 }
