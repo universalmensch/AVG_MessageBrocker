@@ -12,7 +12,8 @@ namespace AVG_MESSAGEBROKER.Receiver{
 
         public Receiver(){
             channel = getConnectionFactory();
-            declareQueue(chanal);
+            declareAnfrageQueue(chanal);
+            declareErgebnisQueue(chanal);
             receiveErgebnis();
         }
 

@@ -11,15 +11,34 @@ namespace AVG_MESSAGEBROKER.Sender{
 
         public Sender(){
             channel = getConnectionFactory();
-            declareQueue(chanal);
+            declareAnfrageQueue(chanal);
+            declareErgebnisQueue(chanal);
+            receiveAnfrage();
         }
 
-        public void sendmessage(){
-            var message = "Hello World!";
-            var body = Encoding.UTF8.GetBytes(message);
+        public void receiveAnfrage(){
+            var consumer = new EventingBasicConsumer(channel);
+
+            consumer.Received += (model, ea) =>
+            {
+                var body = ea.Body.ToArray();
+                var anfrage = Encoding.UTF8.GetString(body);
+                
+                Console.WriteLine($" [x] Received {anfrage}");
+            };
+
+            channel.BasicConsume(queue: "anfrage",
+                                autoAck: true,
+                                consumer: consumer);
+        }
+
+        public void sendmessage(string ergebnis){
+            var body = Encoding.UTF8.GetBytes(ergebnis);
+
+            Console.WriteLine($" [x] send {ergebnis}");
 
             channel.BasicPublish(exchange: string.Empty,
-                     routingKey: "hello",
+                     routingKey: "ergebnis",
                      basicProperties: null,
                      body: body);
         }
