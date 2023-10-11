@@ -13,6 +13,7 @@ namespace AVG_MESSAGEBROKER.Receiver{
         public Receiver(){
             channel = getConnectionFactory();
             declareQueue(chanal);
+            receiveErgebnis();
         }
 
         public void sendanfrage(string land, string stadt, string straße, string hausnummer){
@@ -27,14 +28,16 @@ namespace AVG_MESSAGEBROKER.Receiver{
                      body: body);
         }
 
-        public void receivemessage(){
+        public void receiveErgebnis(){
             var consumer = new EventingBasicConsumer(channel);
+            
             consumer.Received += (model, ea) =>
             {
                 var body = ea.Body.ToArray();
-                var message = Encoding.UTF8.GetString(body);
-                Console.WriteLine($" [x] Received {message}");
+                var ergebnis = Encoding.UTF8.GetString(body);
+                Console.WriteLine($" [x] Received {ergebnis}");
             };
+
             channel.BasicConsume(queue: "ergebnis",
                                 autoAck: true,
                                 consumer: consumer);
