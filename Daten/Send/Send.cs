@@ -1,16 +1,16 @@
 ﻿using System.Text;
 using RabbitMQ.Client;
+namespace AVG_MESSAGEBROKER.Send{
+    class Send{
+        public Model channel;
 
-var factory = new ConnectionFactory { HostName = "localhost" };
-using var connection = factory.CreateConnection();
-using var channel = connection.CreateModel();
-
-channel.QueueDeclare(queue: "hello",
-                     durable: false,
-                     exclusive: false,
-                     autoDelete: false,
-                     arguments: null);
-
+        Receive(){
+            channel = getConnectionFactory();
+            declareQueue(chanal);
+        }
+    }
+}
+/*
 var message = "Hello World!";
 var body = Encoding.UTF8.GetBytes(message);
 
@@ -22,7 +22,5 @@ Console.WriteLine($" [x] Sent {message}");
 
 Console.WriteLine(" Press [enter] to exit.");
 Console.ReadLine();
-Console.WriteLine("Hallo");
-Console.WriteLine("Hallo");
 
 

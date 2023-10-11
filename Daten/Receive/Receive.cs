@@ -1,11 +1,17 @@
-﻿using System.Text;
+﻿using System;
+using System.Text;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 
-namespace AVG_MESSAGEBROKER.Receive
+namespace AVG_MESSAGEBROKER.Receive{
+    class Receive{
+        public Model channel;
 
-class Receive{
-
+        Receive(){
+            channel = getConnectionFactory();
+            declareQueue(chanal);
+        }
+    }
 }
 /*
 
