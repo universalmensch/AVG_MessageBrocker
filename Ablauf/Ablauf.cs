@@ -2,11 +2,14 @@ using System.Text;
 using RabbitMQ.Client;
 using System.Net.Http;
 using System.Threading.Tasks;
+using AVG_MESSAGEBROKER.Receive;
+using AVG_MESSAGEBROKER.Send;
 
 namespace AVG_MESSAGEBROKER.Anlauf{
     class Programm{
         static void Main(){
-            
+            sender = new Send();
+            receiver = new Receive();
         }
 
         public static Model getConnectionFactory(){

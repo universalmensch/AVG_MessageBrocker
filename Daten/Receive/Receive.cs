@@ -5,29 +5,27 @@ using RabbitMQ.Client.Events;
 
 namespace AVG_MESSAGEBROKER.Receive{
     class Receive{
-        public Model channel;
+        private readonly Model channel;
+        public Channel {
+            get { return channel;}
+        }
 
-        Receive(){
+        public Receive(){
             channel = getConnectionFactory();
             declareQueue(chanal);
         }
+
+        public void receivemessage(){
+            var consumer = new EventingBasicConsumer(channel);
+            consumer.Received += (model, ea) =>
+            {
+                var body = ea.Body.ToArray();
+                var message = Encoding.UTF8.GetString(body);
+                Console.WriteLine($" [x] Received {message}");
+            };
+            channel.BasicConsume(queue: "hello",
+                                autoAck: true,
+                                consumer: consumer);
+        }
     }
 }
-/*
-
-
-Console.WriteLine(" [*] Waiting for messages.");
-
-var consumer = new EventingBasicConsumer(channel);
-consumer.Received += (model, ea) =>
-{
-    var body = ea.Body.ToArray();
-    var message = Encoding.UTF8.GetString(body);
-    Console.WriteLine($" [x] Received {message}");
-};
-channel.BasicConsume(queue: "hello",
-                     autoAck: true,
-                     consumer: consumer);
-
-Console.WriteLine(" Press [enter] to exit.");
-Console.ReadLine();
