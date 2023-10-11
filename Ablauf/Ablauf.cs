@@ -1,5 +1,11 @@
+using System.Text;
+using RabbitMQ.Client;
 
-public static void Main(){
+
+using System.Net.Http;
+using System.Threading.Tasks;
+
+static void Main(){
     
 
     
@@ -19,39 +25,20 @@ public static void declareQueue(Model channel){
                      arguments: null);
 }
 
+public static async HttpResponseMessage googleapiaufrufen(){
+    string apiUrl = "https://solar.googleapis.com/v1/dataLayers:get";
 
-using System.Text;
-using RabbitMQ.Client;
+    double latitude = 37.7749; // Beispiel-Latitudenwert
+    double longitude = -122.4194; // Beispiel-Longitudenwert
 
+    double radiusMeters = 100;
 
-using System.Net.Http;
-using System.Threading.Tasks;
+    string view = "FULL_LAYERS";
+    string apiKey = "DEIN_API_KEY";
 
-    static async Task Main()
-    {
-        try
-        {
-            // Setze die API-Endpunkt-URL
-            string apiUrl = "https://solar.googleapis.com/v1/dataLayers:get";
+    string requestUrl = $"{apiUrl}?location={latitude},{longitude}&radiusMeters={radiusMeters}&view={view}";
 
-            // Setze die Koordinaten für die Mitte der Region
-            double latitude = 37.7749; // Beispiel-Latitudenwert
-            double longitude = -122.4194; // Beispiel-Longitudenwert
-
-            // Setze den Radius in Metern
-            double radiusMeters = 100;
-
-            // Setze den gewünschten Datenansichtstyp
-            string view = "FULL_LAYERS"; // Beispielwert, ändere dies entsprechend deinen Anforderungen
-
-            // Setze die API-Key oder Authentifizierungsheader, falls erforderlich
-            string apiKey = "DEIN_API_KEY"; // Beispielwert, ersetze dies durch deinen API-Schlüssel
-
-            // Baue die URL mit den Parametern
-            string requestUrl = $"{apiUrl}?location={latitude},{longitude}&radiusMeters={radiusMeters}&view={view}";
-
-            // Erstelle einen HttpClient
-            using (HttpClient client = new HttpClient())
+    using (HttpClient client = new HttpClient())
             {
                 // Füge ggf. Authentifizierungsheader hinzu
                 // client.DefaultRequestHeaders.Add("Authorization", "Bearer " + apiKey);
@@ -70,16 +57,7 @@ using System.Threading.Tasks;
                 {
                     Console.WriteLine($"Fehler: {response.StatusCode} - {response.ReasonPhrase}");
                 }
-
-                var factory = new ConnectionFactory { HostName = "localhost" };
-using var connection = factory.CreateConnection();
-using var channel = connection.CreateModel();
-
-channel.QueueDeclare(queue: "hello",
-                     durable: false,
-                     exclusive: false,
-                     autoDelete: false,
-                     arguments: null);
+}
 
 //const  message = response;
 Console.WriteLine(response);
