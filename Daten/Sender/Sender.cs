@@ -2,14 +2,14 @@
 using System.Text;
 using RabbitMQ.Client;
 
-namespace AVG_MESSAGEBROKER.Send{
-    class Send{
+namespace AVG_MESSAGEBROKER.Sender{
+    class Sender{
         private readonly Model channel;
         public Model Channel {
             get { return channel;}
         }
 
-        public Send(){
+        public Sender(){
             channel = getConnectionFactory();
             declareQueue(chanal);
         }
