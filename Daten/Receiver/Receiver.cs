@@ -3,7 +3,7 @@ using System.Text;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 
-namespace AVG_MESSAGEBROKER.Receiver{
+namespace Receiver{
     class Receiver{
         private readonly Model channel;
         public Model Channel {
