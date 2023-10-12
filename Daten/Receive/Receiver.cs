@@ -12,8 +12,8 @@ namespace Receiver{
 
         public Receiver(){
             channel = getConnectionFactory();
-            declareAnfrageQueue(chanal);
-            declareErgebnisQueue(chanal);
+            declareAnfrageQueue(channel);
+            declareErgebnisQueue(channel);
             receiveErgebnis();
         }
 
