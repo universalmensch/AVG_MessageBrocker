@@ -6,26 +6,26 @@ using Newtonsoft.Json.Linq;
 
 public class Geocoding{
      public static async Task Main(string[] args){
-        List<KeyValuePair<string, string>> geoDaten = await getGeoDaten("DE","Karlsruhe","40+Moltkestraße","76133");
+        List<KeyValuePair<string, string>> geoDaten = await getGeoDaten("DE","Karlsruhe","40+Moltkestraße");
         string latitude = geoDaten[0].Value;
         string longitude = geoDaten[1].Value;
         Console.WriteLine($"Latitude: {latitude}\nLongitude: {longitude}");
     }
     
-    public static async Task<List<KeyValuePair<string, string>>> getGeoDaten(string country, string city, string street, string postalcode)
+    public static async Task<List<KeyValuePair<string, string>>> getGeoDaten(string country, string city, string street)
     {
         using var client = new HttpClient();
-        var geoDaten = await client.GetStringAsync($"https://geocode.maps.co/search?country={country}&city={city}&street={street}&postalcode={postalcode}");
+        var geoDaten = await client.GetStringAsync($"https://geocode.maps.co/search?country={country}&city={city}&street={street}");
         //Console.WriteLine(geoDaten);
-        JArray jsonArray = JArray.Parse(geoDaten);
+        JArray geoArray = JArray.Parse(geoDaten);
         List<KeyValuePair<string, string>> latundLon = new List<KeyValuePair<string, string>>();
 
-        foreach (JObject item in jsonArray)
+        foreach (JObject geoObject in geoArray)
         {
-            if (item.ContainsKey("lat") && item.ContainsKey("lon"))
+            if (geoObject.ContainsKey("lat") && geoObject.ContainsKey("lon"))
             {
-                string latitude = item["lat"].ToString();
-                string longitude = item["lon"].ToString();
+                string latitude = geoObject["lat"].ToString();
+                string longitude = geoObject["lon"].ToString();
                 latundLon.Add(new KeyValuePair<string, string>("latitude", latitude));
                 latundLon.Add(new KeyValuePair<string, string>("longitude", longitude));
             }
