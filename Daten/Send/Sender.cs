@@ -1,18 +1,21 @@
 ﻿using System;
 using System.Text;
 using RabbitMQ.Client;
+using RabbitMQ.Client.Events;
+using Ablauf;
 
 namespace Daten.Send{
     class Sender{
-        private readonly Model channel;
-        public Model Channel {
-            get { return channel;}
+        private IModel channel;
+        public IModel Channel {
+            get { return channel; }
+            private set => channel = value;
         }
 
-        public Sender(){
-            channel = getConnectionFactory();
-            declareAnfrageQueue(chanal);
-            declareErgebnisQueue(chanal);
+        public void senderstarten(){
+            channel = Programm.getConnectionFactory();
+            Programm.declareAnfrageQueue(channel);
+            Programm.declareErgebnisQueue(channel);
             receiveAnfrage();
         }
 
