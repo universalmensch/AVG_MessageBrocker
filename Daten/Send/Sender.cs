@@ -2,7 +2,7 @@
 using System.Text;
 using RabbitMQ.Client;
 
-namespace Sender{
+namespace Daten.Send{
     class Sender{
         private readonly IModel channel;
         public IModel Channel {
@@ -50,8 +50,3 @@ namespace Sender{
         }
     }
 }
-/*
-
-
-
-

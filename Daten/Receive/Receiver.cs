@@ -3,7 +3,7 @@ using System.Text;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 
-namespace Receiver{
+namespace Daten.Receive{
     class Receiver{
         private readonly IModel channel;
         public IModel Channel {
@@ -18,7 +18,7 @@ namespace Receiver{
         }
 
         public void sendanfrage(string land, string stadt, string straße, string hausnummer){
-            var anfrage = land "," stadt "," straße "," hausnummer;
+            var anfrage = land + "," + stadt + "," + straße + "," + hausnummer;
             var body = Encoding.UTF8.GetBytes(anfrage);
 
             Console.WriteLine($" [x] abgeschickt {anfrage}");

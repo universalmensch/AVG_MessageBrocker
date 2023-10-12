@@ -1,9 +1,10 @@
+using System;
 using System.Text;
 using RabbitMQ.Client;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Receiver;
-using Sender;
+using Daten.Receive;
+using Daten.Send;
 
 namespace Ablauf{
     class Programm{
