@@ -9,8 +9,11 @@ using Daten.Send;
 namespace Ablauf{
     class Programm{
         static void Main(){
-            sender = new Sender();
-            receiver = new Receiver();
+            Sender sender = new Sender();
+            Receiver receiver = new Receiver();
+
+            sender.senderstarten();
+            receiver.receiverstarten();
 
             receiver.sendanfrage("Deutschland", "Karlsruhe", "Lindenplatz", "10");
 

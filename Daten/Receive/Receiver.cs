@@ -2,18 +2,20 @@
 using System.Text;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
+using Ablauf;
 
 namespace Daten.Receive{
     class Receiver{
-        private readonly IModel channel;
+        private IModel channel;
         public IModel Channel {
             get { return channel;}
+            private set => channel = value;
         }
 
-        public Receiver(){
-            channel = getConnectionFactory();
-            declareAnfrageQueue(channel);
-            declareErgebnisQueue(channel);
+        public void receiverstarten(){
+            channel = Programm.getConnectionFactory();
+            Programm.declareAnfrageQueue(channel);
+            Programm.declareErgebnisQueue(channel);
             receiveErgebnis();
         }
 
