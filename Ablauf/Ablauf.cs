@@ -23,7 +23,7 @@ namespace Ablauf{
             return connection.CreateModel();
         }
 
-        public static void declareErgebnisQueue(Model channel){
+        public static void declareErgebnisQueue(IModel channel){
             channel.QueueDeclare(queue: "ergebnis",
                             durable: false,
                             exclusive: false,
@@ -31,7 +31,7 @@ namespace Ablauf{
                             arguments: null);
         }
 
-        public static void declareAnfrageQueue(Model channel){
+        public static void declareAnfrageQueue(IModel channel){
             channel.QueueDeclare(queue: "anfrage",
                             durable: false,
                             exclusive: false,
