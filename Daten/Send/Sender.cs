@@ -4,8 +4,8 @@ using RabbitMQ.Client;
 
 namespace Sender{
     class Sender{
-        private readonly Model channel;
-        public Model Channel {
+        private readonly IModel channel;
+        public IModel Channel {
             get { return channel;}
         }
 

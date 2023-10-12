@@ -16,7 +16,7 @@ namespace Ablauf{
             Console.ReadLine();  
         }
 
-        public static Model getConnectionFactory(){
+        public static IModel getConnectionFactory(){
             var factory = new ConnectionFactory { HostName = "localhost" };
             var connection = factory.CreateConnection();
             return connection.CreateModel();

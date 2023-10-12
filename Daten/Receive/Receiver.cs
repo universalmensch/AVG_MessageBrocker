@@ -5,8 +5,8 @@ using RabbitMQ.Client.Events;
 
 namespace Receiver{
     class Receiver{
-        private readonly Model channel;
-        public Model Channel {
+        private readonly IModel channel;
+        public IModel Channel {
             get { return channel;}
         }
 
