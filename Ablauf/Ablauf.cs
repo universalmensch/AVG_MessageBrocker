@@ -4,6 +4,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Receiver;
 using Sender;
+using namespace Api_Solar;
 
 namespace Ablauf{
     class Programm{
@@ -12,6 +13,15 @@ namespace Ablauf{
             receiver = new Receiver();
 
             receiver.sendanfrage("Deutschland", "Karlsruhe", "Lindenplatz", "10");
+
+             // Ersetzen durch die Apiwerte von Melvin
+            double lat = 49.0093047; // Beispiel-Latitudenwert
+            double long = 8.4332347; // Beispiel-Longitudenwert
+            int dec = 0; // Beispiel-Neigung
+            int az = 0; // Beispiel-Azimut
+            double kwp = 1.67; // Beispiel-installierte Leistung in kWp
+
+            Solarcast(lat, long, dec, az, kwp);
 
             Console.ReadLine();  
         }
