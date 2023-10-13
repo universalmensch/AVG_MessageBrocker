@@ -7,18 +7,10 @@ using Newtonsoft.Json;
 
 namespace Api_Solar
 {
-       static async void Solarcast()
+       static async void Solarcast(double latitude, double longitude, int declination, int azimuth, double installedPower)
     {
         try
         {
-            
-             // Ersetze diese Werte durch deine spezifischen Standort- und Installationsparameter
-            double latitude = 49.0093047; // Beispiel-Latitudenwert
-            double longitude = 8.4332347; // Beispiel-Longitudenwert
-            int declination = 0; // Beispiel-Neigung
-            int azimuth = 0; // Beispiel-Azimut
-            double installedPower = 1.67; // Beispiel-installierte Leistung in kWp
-
             // Erstelle den HttpClient
             using (HttpClient client = new HttpClient())
             {
