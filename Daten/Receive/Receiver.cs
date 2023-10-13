@@ -19,8 +19,8 @@ namespace Daten.Receive{
             receiveErgebnis();
         }
 
-        public void sendanfrage(string land, string stadt, string straße, string hausnummer){
-            var anfrage = land + "," + stadt + "," + straße + "," + hausnummer;
+        public void sendanfrage(string land, string stadt, string straße, string hausnummer, string solarleistung){
+            var anfrage = land + "," + stadt + "," + straße + "," + hausnummer + "," + solarleistung;
             var body = Encoding.UTF8.GetBytes(anfrage);
 
             Console.WriteLine($" [x] abgeschickt {anfrage}");
@@ -38,7 +38,7 @@ namespace Daten.Receive{
             {
                 var body = ea.Body.ToArray();
                 var ergebnis = Encoding.UTF8.GetString(body);
-                Console.WriteLine($" [x] Received {ergebnis}");
+                Console.WriteLine($"Received {ergebnis}");
             };
 
             channel.BasicConsume(queue: "ergebnis",
