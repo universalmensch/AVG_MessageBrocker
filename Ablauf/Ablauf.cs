@@ -3,13 +3,13 @@ using System.Text;
 using RabbitMQ.Client;
 using System.Net.Http;
 using System.Threading.Tasks;
-using namespace Api_Solar;
+using Ablauf;
 using Daten.Receive;
 using Daten.Send;
 
 namespace Ablauf{
     class Programm{
-        static void Main(){
+        static async Task Main(){
             Sender sender = new Sender();
             Receiver receiver = new Receiver();
 
@@ -18,14 +18,19 @@ namespace Ablauf{
 
             receiver.sendanfrage("Deutschland", "Karlsruhe", "Lindenplatz", "10");
 
+            List<KeyValuePair<string, string>> geoDaten = await Geocoding.getGeoDaten("Germany","Karlsruhe","40+Moltkestraße");
+            string latitude = geoDaten[0].Value;
+            string longitude = geoDaten[1].Value;
+            Console.WriteLine($"Latitude: {latitude}\nLongitude: {longitude}");
+
              // Ersetzen durch die Apiwerte von Melvin
             double lat = 49.0093047; // Beispiel-Latitudenwert
-            double long = 8.4332347; // Beispiel-Longitudenwert
+            double longitute = 8.4332347; // Beispiel-Longitudenwert
             int dec = 0; // Beispiel-Neigung
             int az = 0; // Beispiel-Azimut
             double kwp = 1.67; // Beispiel-installierte Leistung in kWp
 
-            Solarcast(lat, long, dec, az, kwp);
+            APISolar.Solarcast(lat, longitute, dec, az, kwp);
 
             Console.ReadLine();  
         }
