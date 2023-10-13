@@ -1,16 +1,20 @@
+using System;
 using System.Text;
 using RabbitMQ.Client;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Receiver;
-using Sender;
 using namespace Api_Solar;
+using Daten.Receive;
+using Daten.Send;
 
 namespace Ablauf{
     class Programm{
         static void Main(){
-            sender = new Sender();
-            receiver = new Receiver();
+            Sender sender = new Sender();
+            Receiver receiver = new Receiver();
+
+            sender.senderstarten();
+            receiver.receiverstarten();
 
             receiver.sendanfrage("Deutschland", "Karlsruhe", "Lindenplatz", "10");
 
@@ -26,13 +30,13 @@ namespace Ablauf{
             Console.ReadLine();  
         }
 
-        public static Model getConnectionFactory(){
+        public static IModel getConnectionFactory(){
             var factory = new ConnectionFactory { HostName = "localhost" };
             var connection = factory.CreateConnection();
             return connection.CreateModel();
         }
 
-        public static void declareErgebnisQueue(Model channel){
+        public static void declareErgebnisQueue(IModel channel){
             channel.QueueDeclare(queue: "ergebnis",
                             durable: false,
                             exclusive: false,
@@ -40,7 +44,7 @@ namespace Ablauf{
                             arguments: null);
         }
 
-        public static void declareAnfrageQueue(Model channel){
+        public static void declareAnfrageQueue(IModel channel){
             channel.QueueDeclare(queue: "anfrage",
                             durable: false,
                             exclusive: false,
