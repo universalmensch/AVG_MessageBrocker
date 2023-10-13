@@ -8,7 +8,16 @@ using Newtonsoft.Json;
 namespace Ablauf
 {
     class APISolar{
-        public static async void Solarcast(double latitude, double longitude, int declination, int azimuth, double installedPower)
+
+        /// <summary>
+        /// SolarcastAPI aufruf
+        /// </summary>
+        /// <param name="latitude"></param>
+        /// <param name="longitude"></param>
+        /// <param name="declination"></param>
+        /// <param name="azimuth"></param>
+        /// <param name="installedPower"></param>
+        public static async Task<string> Solarcast(double latitude, double longitude, int declination, int azimuth, double installedPower)
         {
             try
             {
@@ -28,11 +37,6 @@ namespace Ablauf
                     if (response.IsSuccessStatusCode)
                     {
                         Console.WriteLine("ffffffffffffffffffffffffffffffffffffffff");
-                        // Verarbeite die Antwort hier
-                        //string responseBody = await response.Content.ReadAsStringAsync();
-                        //Console.WriteLine(responseBody);
-
-                        // Verarbeite die Antwort hier
                         string responseBody = await response.Content.ReadAsStringAsync();
                         var formattedJson = JsonConvert.SerializeObject(JsonConvert.DeserializeObject(responseBody), Formatting.Indented);
                         Console.WriteLine(formattedJson);
@@ -55,21 +59,22 @@ namespace Ablauf
                             basicProperties: null,
                             body: body);
                             Console.WriteLine($" [x] Sent message to RabbitMQ");
+                            return formattedJson;
 
                     }
                     else
                     {
                     Console.WriteLine($"Fehler: {response.StatusCode} - {response.ReasonPhrase}");
                     string errorDetails = await response.Content.ReadAsStringAsync();
-                    Console.WriteLine($"Fehlerdetails: {errorDetails}");                }
+                    throw new Exception($"Fehlerdetails: {errorDetails}");                }
                 }
                 
                 }
                 catch (Exception ex)
-                {Console.WriteLine($"Fehler: {ex.Message}");}
                 {
-                
-            }
+                    Console.WriteLine($"Fehler: {ex.Message}");
+                    throw new Exception();
+                }
         }
     }
 }
