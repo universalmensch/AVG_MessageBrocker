@@ -31,7 +31,9 @@ namespace Daten{
                 var body = ea.Body.ToArray();
                 var anfrage = Encoding.UTF8.GetString(body);
                 
+                Programm.logInDatei(anfrage, $@"Logs\{Programm.logfile}");
                 Programm.anfrageEingangBestätigen(anfrage);
+              
                 anfrageBearbeiten(anfrage);
             };
 
@@ -43,7 +45,7 @@ namespace Daten{
         private void sendmessage(string ergebnis){
             var body = Encoding.UTF8.GetBytes(ergebnis);
 
-            Console.WriteLine();
+            Programm.logInDatei($" [Sender] send {ergebnis}", $@"Logs\{Programm.logfile}");
 
             channel.BasicPublish(exchange: string.Empty,
                      routingKey: "ergebnis",
@@ -56,8 +58,6 @@ namespace Daten{
 
             List<KeyValuePair<string, string>> geoDaten = await Geocoding.getGeoDaten(anfragewerte[0], anfragewerte[1], anfragewerte[3] + " " + anfragewerte[2]);
 
-            Console.WriteLine();
-
             CultureInfo cultureinfo = new CultureInfo("en-US");
 
             double latitude = double.Parse(geoDaten[0].Value, cultureinfo);
@@ -65,12 +65,12 @@ namespace Daten{
             double kwp = double.Parse(anfragewerte[4], cultureinfo);
             int neigung = 0;
             int azimut = 0;
-            
-            Console.WriteLine();
+
+            Programm.logInDatei($"\nLatitude: {latitude}\nLongitude: {longitude}", $@"Logs\{Programm.logfile}");
 
             string ergebnis = await APISolar.Solarcast(latitude, longitude, neigung, azimut, kwp);
-
-            Console.WriteLine();
+          
+            Programm.logInDatei(ergebnis, $@"Vorhersagen\{Programm.vorhersageFileName}");
 
             sendmessage(ergebnis);
         }

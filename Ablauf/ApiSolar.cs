@@ -36,11 +36,9 @@ namespace Ablauf
                     // Überprüfe den Statuscode der Antwort
                     if (response.IsSuccessStatusCode)
                     {
-                        Console.WriteLine("ffffffffffffffffffffffffffffffffffffffff");
                         string responseBody = await response.Content.ReadAsStringAsync();
                         var formattedJson = JsonConvert.SerializeObject(JsonConvert.DeserializeObject(responseBody), Formatting.Indented);
                         Console.WriteLine(formattedJson);
-
 
                         // Sende die Antwort an RabbitMQ
                         var factory = new ConnectionFactory { HostName = "localhost" };
@@ -58,7 +56,7 @@ namespace Ablauf
                             routingKey: "hello",
                             basicProperties: null,
                             body: body);
-                            Console.WriteLine($" [x] Sent message to RabbitMQ");
+                            Programm.logInDatei($" [ApiSolar] Sent message to RabbitMQ", $@"Logs\{Programm.logfile}");
                             return formattedJson;
 
                     }
