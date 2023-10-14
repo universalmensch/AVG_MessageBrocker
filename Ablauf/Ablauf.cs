@@ -22,15 +22,15 @@ namespace Ablauf{
             //Receiver receiver = new Receiver();
 
             Console.WriteLine("Land: ");
-            string land = Console.ReadLine();
+            string land = Console.ReadLine()??  throw new Exception();
             Console.WriteLine("Stadt: ");
-            string stadt = Console.ReadLine();
+            string stadt = Console.ReadLine()?? throw new Exception();
             Console.WriteLine("Straße: ");
-            string straße = Console.ReadLine();
+            string straße = Console.ReadLine()?? throw new Exception();
             Console.WriteLine("Hausnummer: ");
-            string hausnummer = Console.ReadLine();
+            string hausnummer = Console.ReadLine()?? throw new Exception();
             Console.WriteLine("Solarleistung: ");
-            string solarleistung = Console.ReadLine();
+            string solarleistung = Console.ReadLine()?? throw new Exception();
 
             receiver.sendanfrage(land, stadt, straße, hausnummer, solarleistung);
 
