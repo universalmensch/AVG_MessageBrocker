@@ -5,13 +5,16 @@ using RabbitMQ.Client.Events;
 using Ablauf;
 
 namespace Daten{
+
+    /// <summary>
+    /// Die Klasse für die Kommunikation des Consumers.
+    /// </summary>
     class Receiver{
         private IModel channel;
-        public IModel Channel {
-            get { return channel;}
-            private set => channel = value;
-        }
 
+        /// <summary>
+        /// Construktor zum erstellen eines Receivers.
+        /// </summary>
         public Receiver(){
             channel = Programm.getConnectionFactory();
             Programm.declareAnfrageQueue(channel);
@@ -19,26 +22,36 @@ namespace Daten{
             receiveErgebnis();
         }
 
+        /// <summary>
+        /// Methode zum abschicken einer Anfrage.
+        /// </summary>
+        /// <param name="land"></param>
+        /// <param name="stadt"></param>
+        /// <param name="straße"></param>
+        /// <param name="hausnummer"></param>
+        /// <param name="solarleistung"></param>
         public void sendanfrage(string land, string stadt, string straße, string hausnummer, string solarleistung){
             var anfrage = land + "," + stadt + "," + straße + "," + hausnummer + "," + solarleistung;
             var body = Encoding.UTF8.GetBytes(anfrage);
-
-            Console.WriteLine($" [x] abgeschickt {anfrage}");
 
             channel.BasicPublish(exchange: string.Empty,
                      routingKey: "anfrage",
                      basicProperties: null,
                      body: body);
+
+            Console.WriteLine();
+            Programm.anfrageAbsendenBestätigen(anfrage);
         }
 
-        public void receiveErgebnis(){
+        private void receiveErgebnis(){
             var consumer = new EventingBasicConsumer(channel);
             
             consumer.Received += (model, ea) =>
             {
                 var body = ea.Body.ToArray();
                 var ergebnis = Encoding.UTF8.GetString(body);
-                Console.WriteLine($"Received {ergebnis}");
+
+                Console.WriteLine();
             };
 
             channel.BasicConsume(queue: "ergebnis",
