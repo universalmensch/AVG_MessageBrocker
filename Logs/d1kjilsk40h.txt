@@ -1,5 +1,13 @@
 
-{
+14.10.2023 13:29:44
+Germany,Karlsruhe,Lindenplatz,10,5
+ [Consumer] abgeschickt Germany,Karlsruhe,Lindenplatz,10,5
+Germany,Karlsruhe,Lindenplatz,10,5
+
+Latitude: 49,01389145
+Longitude: 8,360066680725279
+ [ApiSolar] Sent message to RabbitMQ
+ [Sender] send {
   "result": {
     "watts": {
       "2023-10-14 07:45:14": 0,
@@ -94,24 +102,24 @@
     "code": 0,
     "type": "success",
     "text": "",
-    "pid": "l6ax4GS9",
+    "pid": "968zQ23J",
     "info": {
       "latitude": 49.0139,
       "longitude": 8.3601,
       "distance": 0,
       "place": "Lindenplatz 10, 76185 Karlsruhe, Germany",
       "timezone": "Europe/Berlin",
-      "time": "2023-10-14T13:14:40+02:00",
-      "time_utc": "2023-10-14T13:14:40+02:00"
+      "time": "2023-10-14T13:29:44+02:00",
+      "time_utc": "2023-10-14T13:29:44+02:00"
     },
     "ratelimit": {
       "period": 3600,
       "limit": 12,
-      "remaining": 11
+      "remaining": 10
     }
   }
 }
-{
+Received {
   "result": {
     "watts": {
       "2023-10-14 07:45:14": 0,
