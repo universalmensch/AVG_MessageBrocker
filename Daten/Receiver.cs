@@ -54,6 +54,7 @@ namespace Daten{
                 var ergebnis = Encoding.UTF8.GetString(body);
 
                 Programm.logInDatei($"Received {ergebnis}", $@"Logs\{Programm.logfile}");
+                Programm.ergebnisausgeben(ergebnis);
             };
 
             channel.BasicConsume(queue: "ergebnis",

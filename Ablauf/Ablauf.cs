@@ -7,9 +7,20 @@ using Ablauf;
 using Daten;
 
 namespace Ablauf{
-    public class Programm{
-        static string logfileName = Path.GetRandomFileName();
-        public static string logfile = logfileName.Replace(".", "") + ".txt";
+
+    /// <summary>
+    /// Klasse zur Steuerung des Ablaufs.
+    /// </summary>
+    class Programm{
+
+        /// <summary>
+        /// Erstellung der Logdatei.
+        /// </summary>
+        public static string logfile = Path.GetRandomFileName().Replace(".", "") + ".txt";
+
+        /// <summary>
+        /// Erstellung der Vorhersagedatei.
+        /// </summary>
         public static string vorhersageFileName = "Vorhersage" + DateTime.Now.Date.ToString("dd.MM.yyyy") + ".txt" ;
 
         static void Main(){
@@ -96,10 +107,22 @@ namespace Ablauf{
             Console.WriteLine($" [Receiver] Sended {anfrage}");
         }
 
+        /// <summary>
+        /// Ausgabe des Ergebnisses vom Sender.
+        /// </summary>
+        /// <param name="ergebnis"></param>
+        public static void ergebnisausgeben(string ergebnis){
+            Console.WriteLine(ergebnis);
+        }
+
+        /// <summary>
+        /// Methode zum logging.
+        /// </summary>
+        /// <param name="inhalt"></param>
+        /// <param name="pfadname"></param>
         public static void logInDatei(string inhalt, string pfadname) {
             try
             {
-                // Überprüfen, ob die Datei vorhanden ist und falls nicht wird sie erstellt.
                 if (!File.Exists(pfadname))
                 {
                     File.Create(pfadname).Close();
@@ -108,7 +131,6 @@ namespace Ablauf{
                 string vorhandenerInhalt = File.ReadAllText(pfadname);
                 string gesamterInhalt = vorhandenerInhalt + Environment.NewLine + inhalt;
 
-                // Schreibe den Inhalt in die Datei 
                 File.WriteAllText(pfadname, gesamterInhalt);
             }
             catch (Exception ex)
