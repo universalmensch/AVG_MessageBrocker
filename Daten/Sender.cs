@@ -6,13 +6,16 @@ using Ablauf;
 using System.Globalization;
 
 namespace Daten{
+
+    /// <summary>
+    /// Die Klasse für den Server.
+    /// </summary>
     class Sender{
         private IModel channel;
-        public IModel Channel {
-            get { return channel; }
-            private set => channel = value;
-        }
 
+        /// <summary>
+        /// Construktor zum erstellen des Servers/Senders.
+        /// </summary>
         public Sender(){
             channel = Programm.getConnectionFactory();
             Programm.declareAnfrageQueue(channel);
@@ -20,7 +23,7 @@ namespace Daten{
             receiveAnfrage();
         }
 
-        public void receiveAnfrage(){
+        private void receiveAnfrage(){
             var consumer = new EventingBasicConsumer(channel);
 
             consumer.Received += (model, ea) =>
@@ -28,8 +31,7 @@ namespace Daten{
                 var body = ea.Body.ToArray();
                 var anfrage = Encoding.UTF8.GetString(body);
                 
-                Console.WriteLine($" [x] Received {anfrage}");
-
+                Programm.anfrageEingangBestätigen(anfrage);
                 anfrageBearbeiten(anfrage);
             };
 
@@ -38,10 +40,10 @@ namespace Daten{
                                 consumer: consumer);
         }
 
-        public void sendmessage(string ergebnis){
+        private void sendmessage(string ergebnis){
             var body = Encoding.UTF8.GetBytes(ergebnis);
 
-            Console.WriteLine($" [x] send {ergebnis}");
+            Console.WriteLine();
 
             channel.BasicPublish(exchange: string.Empty,
                      routingKey: "ergebnis",
@@ -49,23 +51,27 @@ namespace Daten{
                      body: body);
         }
 
-        public async void anfrageBearbeiten(string anfrage){
+        private async void anfrageBearbeiten(string anfrage){
             List<string> anfragewerte = anfrage.Split(new string [] { "," }, StringSplitOptions.RemoveEmptyEntries).Select(werte => werte.Trim()).ToList();
 
             List<KeyValuePair<string, string>> geoDaten = await Geocoding.getGeoDaten(anfragewerte[0], anfragewerte[1], anfragewerte[3] + " " + anfragewerte[2]);
-            Console.WriteLine(geoDaten[0].Value);
-            Console.WriteLine(geoDaten[1].Value);
+
+            Console.WriteLine();
+
             CultureInfo cultureinfo = new CultureInfo("en-US");
+
             double latitude = double.Parse(geoDaten[0].Value, cultureinfo);
             double longitude = double.Parse(geoDaten[1].Value, cultureinfo);
-
-            Console.WriteLine($"\nLatitude: {latitude}\nLongitude: {longitude}");
-
+            double kwp = double.Parse(anfragewerte[4], cultureinfo);
             int neigung = 0;
             int azimut = 0;
-            double kwp = Convert.ToDouble(anfragewerte[4]);
+            
+            Console.WriteLine();
 
             string ergebnis = await APISolar.Solarcast(latitude, longitude, neigung, azimut, kwp);
+
+            Console.WriteLine();
+
             sendmessage(ergebnis);
         }
     }
