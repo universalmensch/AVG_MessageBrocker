@@ -7,10 +7,13 @@ using Newtonsoft.Json;
 
 namespace Ablauf
 {
+    /// <summary>
+    /// Klasse für den APISOLAR Aufruf.
+    /// </summary>
     class APISolar{
 
         /// <summary>
-        /// SolarcastAPI aufruf
+        /// SolarcastAPI Aufruf.
         /// </summary>
         /// <param name="latitude"></param>
         /// <param name="longitude"></param>
@@ -21,43 +24,21 @@ namespace Ablauf
         {
             try
             {
-                // Erstelle den HttpClient
                 using (HttpClient client = new HttpClient())
                 {
-                    // Setze den Accept-Header für JSON
                     client.DefaultRequestHeaders.Add("Accept", "application/json");
-
-                    // Baue die URL mit den Parametern
                     string requestUrl = $"https://api.forecast.solar/estimate/{latitude}/{longitude}/{declination}/{azimuth}/{installedPower}";
 
-                    // Sende die GET-Anfrage
                     HttpResponseMessage response = await client.GetAsync(requestUrl);
 
-                    // Überprüfe den Statuscode der Antwort
                     if (response.IsSuccessStatusCode)
                     {
                         string responseBody = await response.Content.ReadAsStringAsync();
                         var formattedJson = JsonConvert.SerializeObject(JsonConvert.DeserializeObject(responseBody), Formatting.Indented);
-                        Console.WriteLine(formattedJson);
 
-                        // Sende die Antwort an RabbitMQ
-                        var factory = new ConnectionFactory { HostName = "localhost" };
-                        using var connection = factory.CreateConnection();
-                        using var channel = connection.CreateModel();
+                        Programm.logInDatei($" [ApiSolar] Sent message to RabbitMQ", $@"Logs\{Programm.logfile}");
 
-                        channel.QueueDeclare(queue: "hello",
-                            durable: false,
-                            exclusive: false,
-                            autoDelete: false,
-                            arguments: null);
-
-                        var body = Encoding.UTF8.GetBytes(formattedJson);
-                        channel.BasicPublish(exchange: string.Empty,
-                            routingKey: "hello",
-                            basicProperties: null,
-                            body: body);
-                            Programm.logInDatei($" [ApiSolar] Sent message to RabbitMQ", $@"Logs\{Programm.logfile}");
-                            return formattedJson;
+                        return formattedJson;
 
                     }
                     else
