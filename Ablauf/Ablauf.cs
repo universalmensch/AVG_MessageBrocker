@@ -7,7 +7,11 @@ using Ablauf;
 using Daten;
 
 namespace Ablauf{
-    class Programm{
+    public class Programm{
+        static string logfileName = Path.GetRandomFileName();
+        public static string logfile = logfileName.Replace(".", "") + ".txt";
+        public static string vorhersageFileName = "Vorhersage" + DateTime.Now.Date.ToString("dd.MM.yyyy") + ".txt" ;
+
         static void Main(){
 
             //Zuerst Sender, dann Consumer gestartet.
@@ -31,6 +35,8 @@ namespace Ablauf{
             string hausnummer = Console.ReadLine()?? throw new Exception();
             Console.WriteLine("Solarleistung: ");
             string solarleistung = Console.ReadLine()?? throw new Exception();
+
+            logInDatei(DateTime.Now + "\n" + land + "," + stadt + "," + straße + "," + hausnummer + "," + solarleistung, $@"Logs\{logfile}");
 
             receiver.sendanfrage(land, stadt, straße, hausnummer, solarleistung);
 
@@ -95,6 +101,27 @@ namespace Ablauf{
         /// <param name="anfrage"></param>
         public static void anfrageAbsendenBestätigen(string anfrage){
             Console.WriteLine($" [Receiver] Sended {anfrage}");
+        }
+
+        public static void logInDatei(string inhalt, string pfadname) {
+            try
+            {
+                // Überprüfen, ob die Datei vorhanden ist und falls nicht wird sie erstellt.
+                if (!File.Exists(pfadname))
+                {
+                    File.Create(pfadname).Close();
+                }
+
+                string vorhandenerInhalt = File.ReadAllText(pfadname);
+                string gesamterInhalt = vorhandenerInhalt + Environment.NewLine + inhalt;
+
+                // Schreibe den Inhalt in die Datei 
+                File.WriteAllText(pfadname, gesamterInhalt);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Fehler beim Schreiben in die Log-Datei: {ex.Message}");
+            }
         }
     }
 }
