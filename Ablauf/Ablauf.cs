@@ -32,8 +32,6 @@ namespace Ablauf{
             Console.WriteLine("Solarleistung: ");
             string solarleistung = Console.ReadLine();
 
-            Console.WriteLine("\n" + land + "," + stadt + "," + straße + "," + hausnummer + "," + solarleistung);
-
             receiver.sendanfrage(land, stadt, straße, hausnummer, solarleistung);
 
             //Sender erst nach abschicken der Anfrage gestartet.
@@ -49,6 +47,9 @@ namespace Ablauf{
         public static IModel getConnectionFactory(){
             var factory = new ConnectionFactory { HostName = "localhost" };
             var connection = factory.CreateConnection();
+
+            Console.WriteLine();
+
             return connection.CreateModel();
         }
 
@@ -62,6 +63,8 @@ namespace Ablauf{
                             exclusive: false,
                             autoDelete: false,
                             arguments: null);
+            
+            Console.WriteLine();
         }
 
         /// <summary>
@@ -74,6 +77,24 @@ namespace Ablauf{
                             exclusive: false,
                             autoDelete: false,
                             arguments: null);
+            
+            Console.WriteLine();
+        }
+
+        /// <summary>
+        /// Methode zum bestätigen der Eingegangen Anfrage.
+        /// </summary>
+        /// <param name="anfrage"></param>
+        public static void anfrageEingangBestätigen(string anfrage){
+            Console.WriteLine($" [Sender] Received {anfrage}");
+        }
+
+        /// <summary>
+        /// Methode zum bestätigen der abgeschickten Anfrage.
+        /// </summary>
+        /// <param name="anfrage"></param>
+        public static void anfrageAbsendenBestätigen(string anfrage){
+            Console.WriteLine($" [Receiver] Sended {anfrage}");
         }
     }
 }
