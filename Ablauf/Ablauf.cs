@@ -26,7 +26,7 @@ namespace Ablauf{
             //Receiver receiver = new Receiver();
 
             Console.WriteLine("Land: ");
-            string land = Console.ReadLine()??  throw new Exception();
+            string land = Console.ReadLine()?? throw new Exception();
             Console.WriteLine("Stadt: ");
             string stadt = Console.ReadLine()?? throw new Exception();
             Console.WriteLine("Straße: ");
