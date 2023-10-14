@@ -54,25 +54,30 @@ namespace Daten{
         }
 
         private async void anfrageBearbeiten(string anfrage){
-            List<string> anfragewerte = anfrage.Split(new string [] { "," }, StringSplitOptions.RemoveEmptyEntries).Select(werte => werte.Trim()).ToList();
+            try {
+                List<string> anfragewerte = anfrage.Split(new string [] { "," }, StringSplitOptions.RemoveEmptyEntries).Select(werte => werte.Trim()).ToList();
 
-            List<KeyValuePair<string, string>> geoDaten = await Geocoding.getGeoDaten(anfragewerte[0], anfragewerte[1], anfragewerte[3] + " " + anfragewerte[2]);
+                List<KeyValuePair<string, string>> geoDaten = await Geocoding.getGeoDaten(anfragewerte[0], anfragewerte[1], anfragewerte[3] + " " + anfragewerte[2]);
 
-            CultureInfo cultureinfo = new CultureInfo("en-US");
+                CultureInfo cultureinfo = new CultureInfo("en-US");
 
-            double latitude = double.Parse(geoDaten[0].Value, cultureinfo);
-            double longitude = double.Parse(geoDaten[1].Value, cultureinfo);
-            double kwp = double.Parse(anfragewerte[4], cultureinfo);
-            int neigung = 0;
-            int azimut = 0;
+                double latitude = double.Parse(geoDaten[0].Value, cultureinfo);
+                double longitude = double.Parse(geoDaten[1].Value, cultureinfo);
+                double kwp = double.Parse(anfragewerte[4], cultureinfo);
+                int neigung = 0;
+                int azimut = 0;
 
-            Programm.logInDatei($"\nLatitude: {latitude}\nLongitude: {longitude}", $@"Logs\{Programm.logfile}");
+                Programm.logInDatei($"\nLatitude: {latitude}\nLongitude: {longitude}", $@"Logs\{Programm.logfile}");
 
-            string ergebnis = await APISolar.Solarcast(latitude, longitude, neigung, azimut, kwp);
+                string ergebnis = await APISolar.Solarcast(latitude, longitude, neigung, azimut, kwp);
           
-            Programm.logInDatei(ergebnis, $@"Vorhersagen\{Programm.vorhersageFileName}");
+                Programm.logInDatei(ergebnis, $@"Vorhersagen\{Programm.vorhersageFileName}");
 
-            sendmessage(ergebnis);
+                sendmessage(ergebnis);
+            } catch (Exception ex)
+            {
+                throw new Exception("Falsche/Ungültige Daten eingegeben.", ex);
+            }
         }
     }
 }
