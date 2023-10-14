@@ -9,6 +9,7 @@ using Daten;
 namespace Ablauf{
     class Programm{
         static void Main(){
+
             //Zuerst Sender, dann Consumer gestartet.
             Sender sender = new Sender();
             Receiver receiver = new Receiver();
