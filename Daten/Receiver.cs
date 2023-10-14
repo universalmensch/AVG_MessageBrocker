@@ -23,7 +23,7 @@ namespace Daten{
             var anfrage = land + "," + stadt + "," + straße + "," + hausnummer + "," + solarleistung;
             var body = Encoding.UTF8.GetBytes(anfrage);
 
-            Console.WriteLine($" [x] abgeschickt {anfrage}");
+            Programm.logInDatei($" [Consumer] abgeschickt {anfrage}", $@"Logs\{Programm.logfile}");
 
             channel.BasicPublish(exchange: string.Empty,
                      routingKey: "anfrage",
@@ -38,7 +38,7 @@ namespace Daten{
             {
                 var body = ea.Body.ToArray();
                 var ergebnis = Encoding.UTF8.GetString(body);
-                Console.WriteLine($"Received {ergebnis}");
+                Programm.logInDatei($"Received {ergebnis}", $@"Logs\{Programm.logfile}");
             };
 
             channel.BasicConsume(queue: "ergebnis",
