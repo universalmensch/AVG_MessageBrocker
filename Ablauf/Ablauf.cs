@@ -26,15 +26,15 @@ namespace Ablauf{
             //Receiver receiver = new Receiver();
 
             Console.WriteLine("Land: ");
-            string land = Console.ReadLine();
+            string land = Console.ReadLine()??  throw new Exception();
             Console.WriteLine("Stadt: ");
-            string stadt = Console.ReadLine();
+            string stadt = Console.ReadLine()?? throw new Exception();
             Console.WriteLine("Straße: ");
-            string straße = Console.ReadLine();
+            string straße = Console.ReadLine()?? throw new Exception();
             Console.WriteLine("Hausnummer: ");
-            string hausnummer = Console.ReadLine();
+            string hausnummer = Console.ReadLine()?? throw new Exception();
             Console.WriteLine("Solarleistung: ");
-            string solarleistung = Console.ReadLine();
+            string solarleistung = Console.ReadLine()?? throw new Exception();
 
             logInDatei(DateTime.Now + "\n" + land + "," + stadt + "," + straße + "," + hausnummer + "," + solarleistung, $@"Logs\{logfile}");
 
@@ -53,6 +53,9 @@ namespace Ablauf{
         public static IModel getConnectionFactory(){
             var factory = new ConnectionFactory { HostName = "localhost" };
             var connection = factory.CreateConnection();
+
+            Console.WriteLine();
+
             return connection.CreateModel();
         }
 
@@ -66,6 +69,8 @@ namespace Ablauf{
                             exclusive: false,
                             autoDelete: false,
                             arguments: null);
+            
+            Console.WriteLine();
         }
 
         /// <summary>
@@ -78,6 +83,24 @@ namespace Ablauf{
                             exclusive: false,
                             autoDelete: false,
                             arguments: null);
+            
+            Console.WriteLine();
+        }
+
+        /// <summary>
+        /// Methode zum bestätigen der Eingegangen Anfrage.
+        /// </summary>
+        /// <param name="anfrage"></param>
+        public static void anfrageEingangBestätigen(string anfrage){
+            Console.WriteLine($" [Sender] Received {anfrage}");
+        }
+
+        /// <summary>
+        /// Methode zum bestätigen der abgeschickten Anfrage.
+        /// </summary>
+        /// <param name="anfrage"></param>
+        public static void anfrageAbsendenBestätigen(string anfrage){
+            Console.WriteLine($" [Receiver] Sended {anfrage}");
         }
 
         public static void logInDatei(string inhalt, string pfadname) {
