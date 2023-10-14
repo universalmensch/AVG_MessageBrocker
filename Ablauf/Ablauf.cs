@@ -53,9 +53,6 @@ namespace Ablauf{
         public static IModel getConnectionFactory(){
             var factory = new ConnectionFactory { HostName = "localhost" };
             var connection = factory.CreateConnection();
-
-            Console.WriteLine();
-
             return connection.CreateModel();
         }
 
@@ -69,8 +66,6 @@ namespace Ablauf{
                             exclusive: false,
                             autoDelete: false,
                             arguments: null);
-            
-            Console.WriteLine();
         }
 
         /// <summary>
@@ -83,8 +78,6 @@ namespace Ablauf{
                             exclusive: false,
                             autoDelete: false,
                             arguments: null);
-            
-            Console.WriteLine();
         }
 
         /// <summary>
