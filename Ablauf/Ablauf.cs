@@ -36,15 +36,15 @@ namespace Ablauf{
             //Sender erst nach abschicken der Anfrage gestartet.
             //Receiver receiver = new Receiver();
 
-            Console.WriteLine("Land: ");
+            Console.WriteLine("Land (bsp: Germany): ");
             string land = Console.ReadLine()?? throw new Exception();
-            Console.WriteLine("Stadt: ");
+            Console.WriteLine("Stadt (bsp: Karlsruhe): ");
             string stadt = Console.ReadLine()?? throw new Exception();
-            Console.WriteLine("Straße: ");
+            Console.WriteLine("Straße (bsp: Lindenplatz): ");
             string straße = Console.ReadLine()?? throw new Exception();
-            Console.WriteLine("Hausnummer: ");
+            Console.WriteLine("Hausnummer (bsp: 10): ");
             string hausnummer = Console.ReadLine()?? throw new Exception();
-            Console.WriteLine("Solarleistung: ");
+            Console.WriteLine("Solarleistung (bsp: 5): ");
             string solarleistung = Console.ReadLine()?? throw new Exception();
 
             logInDatei(DateTime.Now + "\n" + land + "," + stadt + "," + straße + "," + hausnummer + "," + solarleistung, $@"Logs\{logfile}");
