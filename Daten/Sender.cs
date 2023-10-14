@@ -5,7 +5,7 @@ using RabbitMQ.Client.Events;
 using Ablauf;
 using System.Globalization;
 
-namespace Daten.Send{
+namespace Daten{
     class Sender{
         private IModel channel;
         public IModel Channel {
@@ -13,7 +13,7 @@ namespace Daten.Send{
             private set => channel = value;
         }
 
-        public void senderstarten(){
+        public Sender(){
             channel = Programm.getConnectionFactory();
             Programm.declareAnfrageQueue(channel);
             Programm.declareErgebnisQueue(channel);

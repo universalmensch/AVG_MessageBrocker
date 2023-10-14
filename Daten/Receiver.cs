@@ -4,7 +4,7 @@ using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using Ablauf;
 
-namespace Daten.Receive{
+namespace Daten{
     class Receiver{
         private IModel channel;
         public IModel Channel {
@@ -12,7 +12,7 @@ namespace Daten.Receive{
             private set => channel = value;
         }
 
-        public void receiverstarten(){
+        public Receiver(){
             channel = Programm.getConnectionFactory();
             Programm.declareAnfrageQueue(channel);
             Programm.declareErgebnisQueue(channel);
